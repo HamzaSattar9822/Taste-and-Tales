@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taste &amp; Tales — KSA Growth &amp; Creative Tracker</title>
+<style>
+html,body{margin:0;background:#0F1115;min-height:100%;}
+
+.tt-root{
+  --bg:#0F1115; --bg2:#14171D; --gold:#D4AF37; --gold-soft:#C9A94E; --sand:#E7D9B8;
+  --emerald:#10B981; --amber:#E0A43A; --rose:#E0736A; --slate:#7C8595;
+  --text:#ECEEF2; --muted:#8A93A3; --hair:rgba(255,255,255,.07); --hair-gold:rgba(212,175,55,.22);
+  position:relative; min-height:100%; background:var(--bg);
+  color:var(--text); padding:22px 24px 108px; box-sizing:border-box;
+  font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px; line-height:1.5; overflow-x:hidden;
+}
+.tt-root *{box-sizing:border-box;}
+.tt-serif{font-family:Georgia,Cambria,"Times New Roman",serif;}
+
+.tt-glow{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(620px 320px at 88% -8%, rgba(212,175,55,.14), transparent 70%),
+    radial-gradient(520px 360px at 0% 6%, rgba(16,185,129,.06), transparent 72%);
+}
+
+/* HEADER */
+.tt-header{position:relative;display:flex;justify-content:space-between;align-items:center;
+  gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--hair);}
+.tt-brand{display:flex;align-items:center;gap:14px;}
+.tt-mark{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--bg);
+  background:linear-gradient(150deg,var(--gold),#B8912B);box-shadow:0 6px 20px rgba(212,175,55,.28);}
+.tt-wordmark{font-family:Georgia,Cambria,serif;font-size:25px;letter-spacing:.3px;font-weight:600;line-height:1;}
+.tt-amp{color:var(--gold);font-style:italic;}
+.tt-sub{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin-top:5px;letter-spacing:.2px;}
+.tt-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);}
+.tt-head-right{display:flex;align-items:center;gap:18px;}
+.tt-datebadge{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--sand);
+  border:1px solid var(--hair-gold);background:rgba(212,175,55,.06);padding:7px 12px;border-radius:999px;}
+.tt-live{display:inline-flex;align-items:center;gap:5px;color:var(--emerald);font-weight:600;}
+.tt-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);
+  box-shadow:0 0 0 0 rgba(16,185,129,.5);animation:ttpulse 2s infinite;}
+@keyframes ttpulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+
+/* READINESS RING */
+.tt-ring{position:relative;display:flex;align-items:center;gap:9px;}
+.tt-ring svg{transform:rotate(0);}
+.tt-ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:6;}
+.tt-ring-fg{fill:none;stroke:var(--gold);stroke-width:6;stroke-linecap:round;
+  transition:stroke-dashoffset 1.1s cubic-bezier(.16,1,.3,1);}
+.tt-ring-txt{position:absolute;left:0;width:66px;text-align:center;top:50%;transform:translateY(-50%);}
+.tt-ring-num{font-family:Georgia,serif;font-size:17px;font-weight:600;color:var(--sand);}
+.tt-ring-cap{font-size:10px;line-height:1.25;color:var(--muted);text-align:left;}
+
+/* KPI STRIP */
+.tt-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;}
+.tt-kpi{position:relative;padding:15px 15px 14px;border-radius:14px;border:1px solid var(--hair);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  backdrop-filter:blur(10px);overflow:hidden;}
+.tt-kpi::after{content:"";position:absolute;top:0;left:0;width:100%;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);opacity:.5;}
+.tt-kpi-icon{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;margin-bottom:12px;}
+.tt-kpi-val{font-family:Georgia,serif;font-size:27px;font-weight:600;letter-spacing:.5px;line-height:1;}
+.tt-kpi-label{font-size:12px;color:var(--text);margin-top:8px;font-weight:500;}
+.tt-kpi-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* TONES */
+.tt-tone--gold{background:rgba(212,175,55,.14);color:var(--gold);}
+.tt-tone--emerald{background:rgba(16,185,129,.14);color:var(--emerald);}
+.tt-tone--amber{background:rgba(224,164,58,.15);color:var(--amber);}
+.tt-tone--rose{background:rgba(224,115,106,.15);color:var(--rose);}
+.tt-tone--slate{background:rgba(124,133,149,.16);color:var(--slate);}
+
+/* TABS */
+.tt-tabs{display:flex;gap:6px;margin:22px 0 20px;flex-wrap:wrap;
+  border:1px solid var(--hair);padding:6px;border-radius:14px;
+  background:rgba(255,255,255,.02);width:fit-content;max-width:100%;}
+.tt-tab{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:9px;
+  border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;
+  font-family:inherit;cursor:pointer;transition:color .18s,background .18s;white-space:nowrap;}
+.tt-tab:hover{color:var(--text);}
+.tt-tab--on{color:var(--bg);background:linear-gradient(150deg,var(--gold),#C4992C);
+  font-weight:600;box-shadow:0 4px 14px rgba(212,175,55,.25);}
+.tt-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+/* GRID + CARDS */
+.tt-main{position:relative;}
+.tt-grid{display:grid;gap:16px;}
+.tt-grid--overview{grid-template-columns:2fr 1fr;}
+.tt-grid--brand{grid-template-columns:1fr 1fr;}
+.tt-grid--research,.tt-grid--video,.tt-grid--roadmap{grid-template-columns:1fr;}
+.tt-span2{grid-column:span 2;}
+.tt-span3{grid-column:1 / -1;}
+.tt-grid--overview .tt-span2{grid-column:1 / 2;}
+.tt-grid--overview .tt-span3{grid-column:1 / -1;}
+
+.tt-card{border:1px solid var(--hair);border-radius:16px;padding:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.014));
+  backdrop-filter:blur(12px);}
+
+.tt-cardhead{display:flex;gap:11px;align-items:flex-start;margin-bottom:16px;}
+.tt-cardhead-icon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;
+  background:rgba(212,175,55,.12);color:var(--gold);}
+.tt-cardhead-title{font-family:Georgia,serif;font-size:16px;font-weight:600;}
+.tt-cardhead-note{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* PILLS */
+.tt-pill{display:inline-flex;align-items:center;font-size:10.5px;font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;padding:3px 8px;border-radius:6px;white-space:nowrap;}
+.tt-pill--emerald{background:rgba(16,185,129,.13);color:#3DDCA0;}
+.tt-pill--amber{background:rgba(224,164,58,.14);color:#E8B85A;}
+.tt-pill--rose{background:rgba(224,115,106,.14);color:#EC9089;}
+.tt-pill--slate{background:rgba(124,133,149,.16);color:#A0A9B8;}
+.tt-pill--gold{background:rgba(212,175,55,.14);color:var(--gold);}
+
+/* BARS */
+.tt-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:9px;}
+.tt-bar-fill{display:block;height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1);}
+.tt-bar-fill.tt-tone--emerald{background:var(--emerald);color:transparent;}
+.tt-bar-fill.tt-tone--amber{background:var(--amber);}
+.tt-bar-fill.tt-tone--slate{background:var(--slate);}
+.tt-bar-fill.tt-tone--gold{background:linear-gradient(90deg,var(--gold),var(--sand));}
+
+/* PHASES */
+.tt-phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.tt-phase{position:relative;}
+.tt-phase-top{display:flex;align-items:center;margin-bottom:11px;}
+.tt-phase-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-family:Georgia,serif;font-weight:700;font-size:13px;flex:none;}
+.tt-phase-line{flex:1;height:1px;background:var(--hair);margin-left:6px;}
+.tt-phase-title{font-size:13px;font-weight:500;margin-bottom:7px;min-height:34px;}
+.tt-phase-pct{font-size:11px;color:var(--muted);margin-top:6px;}
+
+/* CHANNEL */
+.tt-chan-list{display:flex;flex-direction:column;gap:13px;}
+.tt-chan-row{display:flex;justify-content:space-between;align-items:baseline;}
+.tt-chan-name{font-size:13px;font-weight:500;}
+.tt-chan-pct{font-size:12px;color:var(--gold);font-family:Georgia,serif;}
+.tt-chan-note{font-size:11px;color:var(--muted);margin-top:5px;}
+
+/* FEED */
+.tt-feed{display:flex;flex-direction:column;}
+.tt-feed-row{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--hair);}
+.tt-feed-row:last-child{border-bottom:none;}
+.tt-feed-icon{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex:none;
+  background:rgba(255,255,255,.05);color:var(--sand);}
+.tt-feed-text{flex:1;font-size:13px;color:#D5D9E0;}
+.tt-feed-time{font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;}
+
+/* BRAND HUB */
+.tt-hub{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tt-hub-card{border:1px solid var(--hair);border-radius:12px;padding:14px;background:rgba(255,255,255,.02);}
+.tt-hub-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;margin-bottom:11px;
+  background:rgba(212,175,55,.1);color:var(--gold);}
+.tt-hub-title{font-size:13.5px;font-weight:600;margin-bottom:5px;}
+.tt-hub-note{font-size:11.5px;color:var(--muted);margin-bottom:11px;line-height:1.45;min-height:48px;}
+
+/* ASSETS */
+.tt-assets{display:flex;flex-direction:column;gap:9px;}
+.tt-asset{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:10px;
+  border:1px solid var(--hair);background:rgba(255,255,255,.02);}
+.tt-asset-main{flex:1;display:flex;flex-direction:column;}
+.tt-asset-name{font-size:13px;font-weight:500;}
+.tt-asset-meta{font-size:11px;color:var(--muted);}
+
+/* SWATCHES */
+.tt-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+.tt-swatch{display:flex;flex-direction:column;gap:2px;padding:0;border:1px solid var(--hair);
+  border-radius:12px;overflow:hidden;background:rgba(255,255,255,.02);cursor:pointer;text-align:left;
+  font-family:inherit;color:var(--text);transition:border-color .18s,transform .18s;}
+.tt-swatch:hover{border-color:var(--hair-gold);transform:translateY(-2px);}
+.tt-swatch:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.tt-swatch-chip{position:relative;height:52px;display:grid;place-items:center;}
+.tt-swatch-copied{background:rgba(0,0,0,.35);color:#fff;width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;backdrop-filter:blur(2px);}
+.tt-swatch-name{font-size:12px;font-weight:600;padding:8px 10px 0;}
+.tt-swatch-hex{font-size:11px;color:var(--gold);padding:0 10px;font-variant-numeric:tabular-nums;}
+.tt-swatch-role{font-size:10.5px;color:var(--muted);padding:0 10px 9px;}
+
+/* TYPE */
+.tt-type{display:flex;flex-direction:column;gap:14px;}
+.tt-type-row{display:flex;align-items:center;gap:14px;}
+.tt-type-spec-serif{font-family:Georgia,serif;font-size:34px;font-weight:600;color:var(--sand);width:52px;text-align:center;flex:none;}
+.tt-type-spec-sans{font-size:32px;font-weight:700;width:52px;text-align:center;flex:none;color:var(--text);}
+.tt-type-name{font-size:13px;font-weight:600;}
+.tt-type-desc{font-size:11.5px;color:var(--muted);line-height:1.45;}
+.tt-type-grid{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:4px;}
+.tt-type-grid>span{height:26px;background:rgba(212,175,55,.09);border-radius:4px;}
+.tt-type-gridcap{grid-column:1 / -1;font-size:10.5px;color:var(--muted);margin-top:4px;}
+
+/* INSIGHTS */
+.tt-insights{display:flex;flex-direction:column;gap:11px;}
+.tt-insight{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.02);
+  transition:border-color .2s;}
+.tt-insight--on{border-color:var(--hair-gold);}
+.tt-insight-head{display:flex;align-items:center;gap:11px;width:100%;padding:13px 15px;background:transparent;
+  border:none;color:var(--text);cursor:pointer;font-family:inherit;text-align:left;}
+.tt-insight-icon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;
+  background:rgba(212,175,55,.1);color:var(--gold);}
+.tt-insight-title{font-size:14px;font-weight:600;flex:1;}
+.tt-insight-tag{font-size:11px;color:var(--muted);border:1px solid var(--hair);padding:3px 8px;border-radius:99px;}
+.tt-chev{color:var(--muted);transition:transform .25s;}
+.tt-chev--on{transform:rotate(180deg);color:var(--gold);}
+.tt-insight-body{padding:0 15px 16px 56px;animation:ttfade .28s ease;}
+@keyframes ttfade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.tt-quote{position:relative;padding:12px 14px;border-left:2px solid var(--gold);
+  background:rgba(212,175,55,.05);border-radius:0 10px 10px 0;margin-bottom:13px;}
+.tt-quote-mark{color:var(--gold);opacity:.5;margin-bottom:4px;}
+.tt-quote-ar{display:block;font-size:16px;color:var(--sand);line-height:1.8;}
+.tt-quote-en{display:block;font-size:12px;color:var(--muted);font-style:italic;margin-top:4px;}
+.tt-insight-points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.tt-insight-points li{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#D5D9E0;}
+.tt-insight-points svg{color:var(--emerald);margin-top:3px;flex:none;}
+.tt-insight-flags{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px;}
+.tt-flag{font-size:12px;color:#D5D9E0;padding:11px 13px;border-radius:10px;line-height:1.5;}
+.tt-flag span{display:block;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px;}
+.tt-flag--pain{background:rgba(224,115,106,.08);border:1px solid rgba(224,115,106,.2);}
+.tt-flag--pain span{color:var(--rose);}
+.tt-flag--opp{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);}
+.tt-flag--opp span{color:var(--emerald);}
+
+/* FILTER BAR */
+.tt-filterbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;
+  padding:12px 14px;border:1px solid var(--hair);border-radius:13px;background:rgba(255,255,255,.02);}
+.tt-filter-label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);}
+.tt-filter-chips{display:flex;gap:7px;flex-wrap:wrap;}
+.tt-chip{padding:6px 13px;border-radius:99px;border:1px solid var(--hair);background:transparent;
+  color:var(--muted);font-size:12px;font-family:inherit;cursor:pointer;transition:all .16s;}
+.tt-chip:hover{color:var(--text);border-color:var(--hair-gold);}
+.tt-chip--on{background:rgba(212,175,55,.14);color:var(--gold);border-color:var(--hair-gold);font-weight:600;}
+.tt-filter-count{margin-left:auto;font-size:12px;color:var(--muted);}
+
+/* CREATIVES */
+.tt-creatives{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.tt-creative{border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.02);
+  transition:border-color .18s,transform .18s;}
+.tt-creative:hover{border-color:var(--hair-gold);transform:translateY(-2px);}
+.tt-creative-thumb{position:relative;height:104px;display:grid;place-items:center;color:rgba(231,217,184,.5);
+  background:linear-gradient(135deg,rgba(212,175,55,.1),rgba(16,185,129,.05),rgba(255,255,255,.02));}
+.tt-creative-format{position:absolute;bottom:9px;left:10px;font-size:10.5px;color:var(--sand);
+  background:rgba(0,0,0,.35);padding:3px 8px;border-radius:6px;backdrop-filter:blur(3px);}
+.tt-creative-body{padding:13px 14px 12px;}
+.tt-creative-title{font-size:14px;font-weight:600;margin-bottom:9px;}
+.tt-creative-hook{margin-bottom:12px;}
+.tt-hook-ar{display:block;font-size:14px;color:var(--sand);line-height:1.7;}
+.tt-hook-en{display:block;font-size:12px;color:var(--muted);font-style:italic;margin-top:3px;}
+.tt-creative-foot{display:flex;align-items:center;justify-content:space-between;}
+
+.tt-icon-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--hair);background:transparent;
+  color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:all .16s;flex:none;}
+.tt-icon-btn:hover{color:var(--gold);border-color:var(--hair-gold);}
+
+/* VIDEO */
+.tt-videos{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.tt-video{display:flex;gap:13px;border:1px solid var(--hair);border-radius:14px;padding:13px;background:rgba(255,255,255,.02);}
+.tt-video-thumb{position:relative;width:96px;height:110px;flex:none;border-radius:11px;display:grid;place-items:center;
+  color:rgba(231,217,184,.55);background:linear-gradient(150deg,rgba(212,175,55,.12),rgba(0,0,0,.25));}
+.tt-video-dur{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);font-size:10.5px;color:var(--sand);
+  background:rgba(0,0,0,.4);padding:2px 7px;border-radius:5px;font-variant-numeric:tabular-nums;}
+.tt-video-body{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0;}
+.tt-video-title{font-size:14px;font-weight:600;}
+.tt-video-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);}
+.tt-video-meta span{display:inline-flex;align-items:center;gap:5px;}
+.tt-video-track{display:flex;flex-direction:column;gap:6px;margin-top:2px;}
+.tt-track{display:flex;align-items:center;gap:8px;font-size:11px;}
+.tt-track-k{color:var(--muted);width:32px;}
+.tt-fb-toggle{margin-top:4px;align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
+  padding:7px 13px;border-radius:9px;border:1px solid var(--hair);background:transparent;color:var(--muted);
+  font-size:12px;font-family:inherit;cursor:pointer;transition:all .16s;}
+.tt-fb-toggle:hover{color:var(--text);border-color:var(--hair-gold);}
+.tt-fb-toggle--on{background:rgba(16,185,129,.12);color:#3DDCA0;border-color:rgba(16,185,129,.3);}
+
+/* GANTT */
+.tt-gantt{display:flex;flex-direction:column;gap:8px;overflow-x:auto;}
+.tt-gantt-head,.tt-gantt-row{display:grid;grid-template-columns:190px repeat(8,1fr);align-items:center;gap:0;min-width:640px;}
+.tt-gantt-week{font-size:11px;color:var(--muted);text-align:center;padding-bottom:6px;
+  border-bottom:1px solid var(--hair);}
+.tt-gantt-corner{border-bottom:1px solid var(--hair);}
+.tt-gantt-task{font-size:12.5px;color:#D5D9E0;padding-right:14px;}
+.tt-gantt-track{grid-column:2 / -1;display:grid;grid-template-columns:repeat(8,1fr);
+  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(12.5% - 1px),var(--hair) calc(12.5% - 1px),var(--hair) 12.5%);
+  border-radius:6px;padding:5px 0;}
+.tt-gantt-bar{height:16px;border-radius:6px;opacity:.92;}
+.tt-legend{display:flex;gap:20px;margin-top:16px;font-size:11.5px;color:var(--muted);}
+.tt-legend span{display:inline-flex;align-items:center;gap:7px;}
+.tt-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+
+/* ACTION BAR */
+.tt-actionbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:20;
+  display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:space-between;
+  width:min(940px,calc(100% - 36px));padding:13px 16px 13px 22px;border-radius:16px;
+  border:1px solid var(--hair-gold);background:rgba(20,23,29,.82);backdrop-filter:blur(16px);
+  box-shadow:0 14px 44px rgba(0,0,0,.5);}
+.tt-actionbar-info{font-size:13px;color:var(--muted);}
+.tt-bar-strong{color:var(--sand);font-weight:600;}
+.tt-bar-msg{display:inline-flex;align-items:center;gap:8px;color:#3DDCA0;font-weight:500;}
+.tt-actionbar-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.tt-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;
+  font-size:13px;font-family:inherit;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .16s;}
+.tt-btn--ghost{background:transparent;border-color:var(--hair);color:var(--text);}
+.tt-btn--ghost:hover{border-color:var(--hair-gold);color:var(--sand);}
+.tt-btn--gold{background:linear-gradient(150deg,var(--gold),#C4992C);color:var(--bg);
+  box-shadow:0 6px 18px rgba(212,175,55,.3);}
+.tt-btn--gold:hover{filter:brightness(1.06);}
+.tt-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .tt-kpis{grid-template-columns:repeat(3,1fr);}
+  .tt-grid--overview,.tt-grid--brand{grid-template-columns:1fr;}
+  .tt-grid--overview .tt-span2,.tt-span2{grid-column:1 / -1;}
+  .tt-phases{grid-template-columns:1fr 1fr;}
+  .tt-creatives,.tt-videos,.tt-swatches,.tt-hub{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .tt-root{padding:16px 14px 120px;}
+  .tt-kpis{grid-template-columns:1fr 1fr;}
+  .tt-creatives,.tt-videos,.tt-swatches,.tt-hub,.tt-phases,.tt-insight-flags{grid-template-columns:1fr;}
+  .tt-insight-body{padding-left:15px;}
+  .tt-actionbar{flex-direction:column;align-items:stretch;}
+  .tt-actionbar-btns{justify-content:stretch;}
+  .tt-btn{flex:1;justify-content:center;}
+}
+@media(prefers-reduced-motion:reduce){
+  .tt-root *{animation:none!important;transition:none!important;}
+}
+
+</style>
+</head>
+<body>
+<div class="tt-root" id="root"></div>
+<script>
+var ICONS = {"Utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\" /> <path d=\"M7 2v20\" /> <path d=\"M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\" />","Crown":"<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\" /> <path d=\"M5 21h14\" />","MapPin":"<path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />","LayoutGrid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\" />","Video":"<path d=\"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5\" /> <rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\" />","Radio":"<path d=\"M4.9 19.1C1 15.2 1 8.8 4.9 4.9\" /> <path d=\"M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" /> <path d=\"M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5\" /> <path d=\"M19.1 4.9C23 8.8 23 15.1 19.1 19\" />","Calendar":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" />","TrendingUp":"<polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\" /> <polyline points=\"16 7 22 7 22 13\" />","Target":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <circle cx=\"12\" cy=\"12\" r=\"6\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" />","Clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polyline points=\"12 6 12 12 16 14\" />","Sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />","FileText":"<path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\" /> <path d=\"M14 2v4a2 2 0 0 0 2 2h4\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />","Palette":"<circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" /> <path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z\" />","Type":"<polyline points=\"4 7 4 4 20 4 20 7\" /> <line x1=\"9\" x2=\"15\" y1=\"20\" y2=\"20\" /> <line x1=\"12\" x2=\"12\" y1=\"4\" y2=\"20\" />","Building2":"<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />","Camera":"<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />","MessageSquare":"<path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\" />","Car":"<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\" /> <circle cx=\"7\" cy=\"17\" r=\"2\" /> <path d=\"M9 17h6\" /> <circle cx=\"17\" cy=\"17\" r=\"2\" />","Smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />","Quote":"<path d=\"M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z\" /> <path d=\"M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z\" />","ChevronDown":"<path d=\"m6 9 6 6 6-6\" />","Check":"<path d=\"M20 6 9 17l-5-5\" />","Filter":"<polygon points=\"22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3\" />","Eye":"<path d=\"M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","PlayCircle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polygon points=\"10 8 16 12 10 16 10 8\" />","Download":"<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /> <polyline points=\"7 10 12 15 17 10\" /> <line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\" />","Send":"<path d=\"m22 2-7 20-4-9-9-4Z\" /> <path d=\"M22 2 11 13\" />","ThumbsUp":"<path d=\"M7 10v12\" /> <path d=\"M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z\" />","CheckCircle2":"<path d=\"M22 11.08V12a10 10 0 1 1-5.93-9.14\" /> <path d=\"m9 11 3 3L22 4\" />","AlertTriangle":"<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /> <path d=\"M12 9v4\" /> <path d=\"M12 17h.01\" />","Layers":"<path d=\"m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z\" /> <path d=\"m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65\" /> <path d=\"m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65\" />"};
+var KPIS = [
+  { icon:"Crown",        label: "Brand identity & brand book", value: "100%", sub: "Assets final & ready", tone: "gold" },
+  { icon:"MapPin",       label: "Local field research",        value: "450+", sub: "WhatsApp · drivers · SMS", tone: "emerald" },
+  { icon:"LayoutGrid",   label: "Ad creatives",                value: "18",   sub: "Variants under review", tone: "amber" },
+  { icon:"Video",        label: "Reels & video",               value: "12 / 6", sub: "Shot / in client review", tone: "amber" },
+  { icon:"Radio",        label: "Channels prepared",           value: "5",    sub: "WA · SMS · Meta · TikTok · Snap", tone: "emerald" },
+];
+var PHASES = [
+  { n: 1, title: "Foundation & brand book",              status: "Done",         pct: 100 },
+  { n: 2, title: "Field research & SMS architecture",    status: "Active",       pct: 74  },
+  { n: 3, title: "Campaign production & iteration",      status: "Under review", pct: 48  },
+  { n: 4, title: "Media-buy launch",                     status: "Queued",       pct: 8   },
+];
+var ACTIVITY = [
+  { t: "2h ago",     icon:"Video",       text: "Reel draft \u201cThe Art of Plating\u201d submitted for client review." },
+  { t: "5h ago",     icon:"MessageSquare", text: "42 new WhatsApp survey logs added to the research engine." },
+  { t: "Yesterday",  icon:"CheckCircle2", text: "Brand Book v1.0 marked Final Approved and published to the asset hub." },
+  { t: "Yesterday",  icon:"AlertTriangle", text: "Creative \u201cCorporate Lunch Express\u201d returned with revision notes." },
+  { t: "2 days ago", icon:"Layers",      text: "SMS segmentation matrix updated \u2014 four active audience segments." },
+  { t: "3 days ago", icon:"Car",         text: "Cab-driver field batch #3 uploaded (60 logs, Riyadh + Jeddah)." },
+];
+var CHANNELS = [
+  { name: "WhatsApp Business", note: "Broadcast + reservation flow drafted", ready: 92 },
+  { name: "SMS Marketing",     note: "4 segments, throttling configured",    ready: 85 },
+  { name: "Meta Ads",          note: "Pixel live, audiences staged",         ready: 70 },
+  { name: "TikTok",            note: "Creator brief + 9:16 assets in edit",  ready: 55 },
+  { name: "Snapchat",          note: "Geo-filter concept in review",         ready: 48 },
+];
+var BRAND_HUB = [
+  { icon:"Palette",  title: "Visual identity",       note: "Logo suite, mark system, motif library and usage rules.", status: "Final" },
+  { icon:"Type",     title: "Tone of voice",         note: "Bilingual voice \u2014 warm, confident Arabic & English registers.", status: "Final" },
+  { icon:"Camera",   title: "Menu photography",      note: "Lighting, plating and crop specs for all F&B shoots.", status: "Final" },
+  { icon:"Building2",title: "In-restaurant branding",note: "Spatial signage, table collateral and wayfinding rules.", status: "Final" },
+];
+var PALETTE = [
+  { name: "Obsidian",     hex: "#0F1115", role: "Primary surface" },
+  { name: "Royal Gold",   hex: "#D4AF37", role: "Primary accent" },
+  { name: "Desert Sand",  hex: "#E7D9B8", role: "Secondary" },
+  { name: "Najdi Green",  hex: "#10B981", role: "Signal / success" },
+  { name: "Warm Charcoal",hex: "#1C2027", role: "Raised surface" },
+  { name: "Ivory",        hex: "#F4EFE6", role: "On-dark text" },
+];
+var ASSETS = [
+  { name: "Brand Book v1.0", meta: "PDF \u00b7 42 pages", status: "Final approved" },
+  { name: "Logo Suite",      meta: "SVG / PNG / vector", status: "Exported" },
+  { name: "Type & Color System", meta: "Tokens + specimen", status: "Final approved" },
+  { name: "Menu Design Guidelines", meta: "Layout grid + templates", status: "Final approved" },
+  { name: "In-Restaurant Collateral", meta: "Signage & table cards", status: "Final approved" },
+];
+var CREATIVES = [
+  { title: "Saudi National Day Special", format: "Feed Post",        en: "A nation's flavor, served with pride.", ar: "\u0646\u0643\u0647\u0629 \u0648\u0637\u0646\u060c \u062A\u064F\u0642\u062F\u0651\u064E\u0645 \u0628\u0643\u0644 \u0641\u062E\u0631.", status: "Approved" },
+  { title: "The Art of Plating",         format: "TikTok 9:16",      en: "Every plate tells a tale.", ar: "\u0643\u0644 \u0637\u0628\u0642 \u064A\u0631\u0648\u064A \u062D\u0643\u0627\u064A\u0629.", status: "Under review" },
+  { title: "Late Night Dining Hook",     format: "IG Story",         en: "The night tastes better here.", ar: "\u0627\u0644\u0644\u064A\u0644 \u0623\u0644\u0630\u0651 \u0639\u0646\u062F\u0646\u0627.", status: "Under review" },
+  { title: "Family Weekend Feast",       format: "Feed Post",        en: "Gather. Feast. Remember.", ar: "\u0627\u062C\u062A\u0645\u0639\u0648\u0627 \u062D\u0648\u0644 \u0627\u0644\u0645\u0627\u0626\u062F\u0629.", status: "Approved" },
+  { title: "Corporate Lunch Express",    format: "SMS + Feed",       en: "Lunch, elevated in 30 minutes.", ar: "\u063A\u062F\u0627\u0621 \u0631\u0627\u0642\u064D \u0641\u064A \u0646\u0635\u0641 \u0633\u0627\u0639\u0629.", status: "Revisions" },
+  { title: "Signature Dish Reveal",      format: "TikTok 9:16",      en: "Meet the dish everyone's talking about.", ar: "\u0627\u0644\u0637\u0628\u0642 \u0627\u0644\u0630\u064A \u064A\u062A\u062D\u062F\u0651\u062B \u0639\u0646\u0647 \u0627\u0644\u062C\u0645\u064A\u0639.", status: "Under review" },
+  { title: "Golden Hour Ambiance",       format: "IG Story",         en: "Where evenings glow golden.", ar: "\u062D\u064A\u062B \u062A\u062A\u0644\u0623\u0644\u0623 \u0627\u0644\u0623\u0645\u0633\u064A\u0627\u062A.", status: "Approved" },
+  { title: "Chef's Table Experience",    format: "Feed Post",        en: "A seat at the chef's table.", ar: "\u0645\u0642\u0639\u062F \u0639\u0644\u0649 \u0637\u0627\u0648\u0644\u0629 \u0627\u0644\u0634\u064A\u0641.", status: "Under review" },
+  { title: "Ramadan Iftar Teaser",       format: "Reel 9:16",        en: "Break your fast in style.", ar: "\u0625\u0641\u0637\u0627\u0631 \u064A\u0644\u064A\u0642 \u0628\u0643.", status: "Revisions" },
+  { title: "Snapchat Location Filter",   format: "Snapchat",         en: "Snap your Taste & Tales moment.", ar: "\u0648\u062B\u0651\u0642 \u0644\u062D\u0638\u062A\u0643 \u0645\u0639\u0646\u0627.", status: "Under review" },
+  { title: "VIP Reservation Invite",     format: "WhatsApp Broadcast", en: "Your table is reserved.", ar: "\u0637\u0627\u0648\u0644\u062A\u0643 \u0628\u0627\u0646\u062A\u0638\u0627\u0631\u0643.", status: "Approved" },
+  { title: "Dessert Spotlight",          format: "IG Story",         en: "Save room for the sweet finale.", ar: "\u0627\u062D\u0641\u0638 \u0645\u0643\u0627\u0646\u064B\u0627 \u0644\u0644\u062D\u0644\u0649.", status: "Under review" },
+];
+var VIDEOS = [
+  { title: "Kitchen & chef highlights", dur: "0:45", platform: "TikTok / Reels", audio: "Oud instrumental", raw: "Done", post: "Edit \u00b7 under review", state: "review" },
+  { title: "Atmosphere & ambient lighting", dur: "0:30", platform: "IG Story", audio: "Soft lounge", raw: "Done", post: "Color grade \u00b7 active", state: "active" },
+  { title: "Customer reaction & dish reveal", dur: "1:00", platform: "Feed", audio: "Upbeat modern", raw: "Filming scheduled", post: "Post-production queued", state: "queued" },
+  { title: "Plating macro reel", dur: "0:20", platform: "TikTok", audio: "Trending sound", raw: "Done", post: "Edit \u00b7 approved", state: "done" },
+  { title: "Rooftop evening ambiance", dur: "0:35", platform: "Snapchat / Story", audio: "Ambient synth", raw: "Done", post: "Color grade \u00b7 under review", state: "review" },
+  { title: "Arabic coffee ritual", dur: "0:25", platform: "Reels", audio: "Traditional", raw: "Filming scheduled", post: "Queued", state: "queued" },
+];
+var GANTT = [
+  { task: "Brand book finalization",     start: 1, span: 1, tone: "done" },
+  { task: "SMS architecture & segments", start: 1, span: 3, tone: "active" },
+  { task: "WhatsApp broadcast automation", start: 2, span: 3, tone: "active" },
+  { task: "Creative production & iteration", start: 2, span: 4, tone: "review" },
+  { task: "Meta paid ads launch",        start: 5, span: 3, tone: "queued" },
+  { task: "Snapchat / TikTok ads",       start: 5, span: 4, tone: "queued" },
+  { task: "Influencer tasting invites",  start: 6, span: 2, tone: "queued" },
+  { task: "Grand launch push",           start: 8, span: 1, tone: "queued" },
+];
+var TABS = [
+  { id: "overview", label: "Overview",       icon:"TrendingUp" },
+  { id: "brand",    label: "Brand identity", icon:"Crown" },
+  { id: "research", label: "Field research", icon:"MapPin" },
+  { id: "creative", label: "Creative lab",   icon:"LayoutGrid" },
+  { id: "video",    label: "Video pipeline", icon:"Video" },
+  { id: "roadmap",  label: "Roadmap",        icon:"Calendar" },
+];
+var INSIGHTS = [
+  {
+    id: "wa", icon:"MessageSquare", title: "WhatsApp direct survey", tag: "180 conversations",
+    quote: "\u0644\u0648 \u0641\u064A\u0647 \u062D\u062C\u0632 \u0628\u0627\u0644\u0648\u0627\u062A\u0633\u0627\u0628 \u0628\u064A\u0643\u0648\u0646 \u0623\u0633\u0647\u0644 \u0628\u0643\u062B\u064A\u0631",
+    quoteEn: "\u201cBooking through WhatsApp would be so much easier.\u201d",
+    points: [
+      "68% would visit for a special occasion within the first month.",
+      "Peak interest window: 8:30\u201311:00 PM on weekdays, busiest Thu\u2013Fri.",
+      "Guests prefer WhatsApp confirmation over phone calls for reservations.",
+    ],
+    pain: "No frictionless reservation channel today \u2014 calls go unanswered at peak.",
+    opp: "Launch a WhatsApp reservation + waitlist flow before the media push.",
+  },
+  {
+    id: "cab", icon:"Car", title: "Cab driver & logistics research", tag: "150 driver logs",
+    quote: "\u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u062A\u0639\u062C\u0651 \u0628\u0627\u0644\u0632\u0648\u0627\u0631 \u0628\u0639\u062F \u0627\u0644\u0639\u0634\u0627\u0621",
+    quoteEn: "\u201cThe area is packed with visitors after dinner.\u201d",
+    points: [
+      "Peak drop-off traffic near the venue: 9 PM\u201312 AM on weekends.",
+      "Only ~40% of Careem/Uber drivers could locate the venue by name.",
+      "Strong footfall spillover from adjacent retail after 8 PM.",
+    ],
+    pain: "Low driver awareness and weak wayfinding hurt walk-in discovery.",
+    opp: "Add pin-drop landmarks, driver incentives and exterior signage.",
+  },
+  {
+    id: "sms", icon:"Smartphone", title: "SMS audience segmentation", tag: "8,880 contacts",
+    quote: null, quoteEn: null,
+    points: [
+      "VIP Foodies \u2014 1,240 \u00b7 high LTV, want exclusivity & first access.",
+      "Local Families \u2014 3,880 \u00b7 weekend visits, kids menu, value bundles.",
+      "Late-Night Youth \u2014 2,610 \u00b7 post-11 PM, trend-led, highly social.",
+      "Corporate Lunch \u2014 1,150 \u00b7 weekday noon, speed + invoicing.",
+    ],
+    pain: "One-size messaging under-performs across such distinct segments.",
+    opp: "Segment-specific offers and send-time tuning per audience.",
+  },
+];
+var FILTERS = ["All", "Pending review", "Approved", "Revisions"];
+var VSTATE = { done: "emerald", active: "amber", review: "amber", queued: "slate" };
+</script>
+<script>
+/* globals ICONS, KPIS, PHASES, ACTIVITY, CHANNELS, BRAND_HUB, PALETTE, ASSETS,
+   CREATIVES, VIDEOS, GANTT, TABS, INSIGHTS, FILTERS, VSTATE */
+
+function ic(name, size, sw) {
+  size = size || 16; sw = sw || 1.8;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" ' +
+    'stroke="currentColor" stroke-width="' + sw + '" stroke-linecap="round" stroke-linejoin="round">' +
+    (ICONS[name] || '') + '</svg>';
+}
+function pill(text, tone) { return '<span class="tt-pill tt-pill--' + tone + '">' + text + '</span>'; }
+
+function statusTone(s) {
+  var v = s.toLowerCase();
+  if (v.indexOf('done') > -1 || v.indexOf('final') > -1 || v.indexOf('approved') > -1 || v.indexOf('exported') > -1) return 'emerald';
+  if (v.indexOf('revision') > -1) return 'rose';
+  if (v.indexOf('queued') > -1) return 'slate';
+  return 'amber';
+}
+
+var state = { tab: 'overview', filter: 'All', openInsight: 'wa', copied: null, feedback: {}, barMsg: null };
+
+/* ---------- header + ring ---------- */
+function ring(value) {
+  var r = 26, c = 2 * Math.PI * r, off = c - (value / 100) * c;
+  return '<div class="tt-ring">' +
+    '<svg width="66" height="66" viewBox="0 0 66 66">' +
+      '<circle cx="33" cy="33" r="' + r + '" class="tt-ring-bg"></circle>' +
+      '<circle cx="33" cy="33" r="' + r + '" class="tt-ring-fg" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 33 33)"></circle>' +
+    '</svg>' +
+    '<div class="tt-ring-txt"><span class="tt-ring-num">' + value + '%</span></div>' +
+    '<div class="tt-ring-cap">Launch<br>readiness</div></div>';
+}
+
+function header() {
+  var today = new Date().toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+  return '<header class="tt-header">' +
+    '<div class="tt-brand"><div class="tt-mark">' + ic('Utensils', 20, 1.6) + '</div>' +
+      '<div><div class="tt-wordmark">Taste <span class="tt-amp">&amp;</span> Tales</div>' +
+      '<div class="tt-sub">KSA Growth &amp; Creative Tracker <span class="tt-dot"></span>Q3 / Q4</div></div></div>' +
+    '<div class="tt-head-right">' +
+      '<div class="tt-datebadge">' + ic('Calendar', 13, 1.8) + ' ' + today + ' <span class="tt-live">Live</span></div>' +
+      ring(82) + '</div></header>';
+}
+
+function kpis() {
+  var h = KPIS.map(function (k) {
+    return '<div class="tt-kpi"><div class="tt-kpi-icon tt-tone--' + k.tone + '">' + ic(k.icon, 17, 1.7) + '</div>' +
+      '<div class="tt-kpi-val">' + k.value + '</div>' +
+      '<div class="tt-kpi-label">' + k.label + '</div>' +
+      '<div class="tt-kpi-sub">' + k.sub + '</div></div>';
+  }).join('');
+  return '<section class="tt-kpis">' + h + '</section>';
+}
+
+function tabs() {
+  var h = TABS.map(function (t) {
+    var on = state.tab === t.id;
+    return '<button role="tab" aria-selected="' + on + '" data-tab="' + t.id + '" class="tt-tab' + (on ? ' tt-tab--on' : '') + '">' +
+      ic(t.icon, 15, 1.8) + ' ' + t.label + '</button>';
+  }).join('');
+  return '<nav class="tt-tabs" role="tablist">' + h + '</nav>';
+}
+
+function cardHead(icon, title, note) {
+  return '<div class="tt-cardhead"><span class="tt-cardhead-icon">' + ic(icon, 16, 1.7) + '</span>' +
+    '<div><div class="tt-cardhead-title">' + title + '</div>' +
+    (note ? '<div class="tt-cardhead-note">' + note + '</div>' : '') + '</div></div>';
+}
+
+/* ---------- panels ---------- */
+function overview() {
+  var phases = PHASES.map(function (p, i) {
+    var tone = statusTone(p.status);
+    return '<div class="tt-phase"><div class="tt-phase-top">' +
+      '<span class="tt-phase-dot tt-tone--' + tone + '">' + p.n + '</span>' +
+      (i < PHASES.length - 1 ? '<span class="tt-phase-line"></span>' : '') + '</div>' +
+      '<div class="tt-phase-title">' + p.title + '</div>' + pill(p.status, tone) +
+      '<div class="tt-bar"><span style="width:' + p.pct + '%" class="tt-bar-fill tt-tone--' + tone + '"></span></div>' +
+      '<div class="tt-phase-pct">' + p.pct + '%</div></div>';
+  }).join('');
+
+  var chans = CHANNELS.map(function (ch) {
+    return '<div class="tt-chan"><div class="tt-chan-row"><span class="tt-chan-name">' + ch.name + '</span>' +
+      '<span class="tt-chan-pct">' + ch.ready + '%</span></div>' +
+      '<div class="tt-bar"><span style="width:' + ch.ready + '%" class="tt-bar-fill tt-tone--gold"></span></div>' +
+      '<div class="tt-chan-note">' + ch.note + '</div></div>';
+  }).join('');
+
+  var feed = ACTIVITY.map(function (a) {
+    return '<div class="tt-feed-row"><span class="tt-feed-icon">' + ic(a.icon, 14, 1.8) + '</span>' +
+      '<span class="tt-feed-text">' + a.text + '</span><span class="tt-feed-time">' + a.t + '</span></div>';
+  }).join('');
+
+  return '<div class="tt-grid tt-grid--overview">' +
+    '<section class="tt-card tt-span2">' + cardHead('Target', 'Strategic progress roadmap', 'Four phases from foundation to media-buy launch') +
+      '<div class="tt-phases">' + phases + '</div></section>' +
+    '<section class="tt-card">' + cardHead('Radio', 'Channel readiness', 'Setup status across prepared channels') +
+      '<div class="tt-chan-list">' + chans + '</div></section>' +
+    '<section class="tt-card tt-span3">' + cardHead('Clock', 'Recent activity', 'Live log of asset, research and revision updates') +
+      '<div class="tt-feed">' + feed + '</div></section></div>';
+}
+
+function brand() {
+  var hub = BRAND_HUB.map(function (b) {
+    return '<div class="tt-hub-card"><div class="tt-hub-icon">' + ic(b.icon, 18, 1.6) + '</div>' +
+      '<div class="tt-hub-title">' + b.title + '</div><div class="tt-hub-note">' + b.note + '</div>' +
+      pill(b.status, 'emerald') + '</div>';
+  }).join('');
+
+  var assets = ASSETS.map(function (a) {
+    return '<div class="tt-asset"><div class="tt-asset-main"><span class="tt-asset-name">' + a.name + '</span>' +
+      '<span class="tt-asset-meta">' + a.meta + '</span></div>' + pill(a.status, statusTone(a.status)) +
+      '<button class="tt-icon-btn" title="Preview / download">' + ic('Download', 14, 1.8) + '</button></div>';
+  }).join('');
+
+  var swatches = PALETTE.map(function (p) {
+    var on = state.copied === p.hex;
+    return '<button class="tt-swatch" data-hex="' + p.hex + '">' +
+      '<span class="tt-swatch-chip" style="background:' + p.hex + '">' +
+      (on ? '<span class="tt-swatch-copied">' + ic('Check', 14, 2.2) + '</span>' : '') + '</span>' +
+      '<span class="tt-swatch-name">' + p.name + '</span>' +
+      '<span class="tt-swatch-hex">' + (on ? 'Copied' : p.hex) + '</span>' +
+      '<span class="tt-swatch-role">' + p.role + '</span></button>';
+  }).join('');
+
+  var type = '<div class="tt-type">' +
+    '<div class="tt-type-row"><div class="tt-type-spec-serif">Aa</div><div>' +
+      '<div class="tt-type-name">Display \u2014 modern serif</div>' +
+      '<div class="tt-type-desc">High-contrast serif for headlines, paired with Arabic calligraphic display.</div></div></div>' +
+    '<div class="tt-type-row"><div class="tt-type-spec-sans">Aa</div><div>' +
+      '<div class="tt-type-name">Body \u2014 humanist sans</div>' +
+      '<div class="tt-type-desc">Latin sans + IBM Plex Arabic for menus, captions and UI copy.</div></div></div>' +
+    '<div class="tt-type-grid"><span></span><span></span><span></span><span></span><span></span><span></span>' +
+      '<div class="tt-type-gridcap">12-column Swiss grid \u00b7 8px baseline</div></div></div>';
+
+  return '<div class="tt-grid tt-grid--brand">' +
+    '<section class="tt-card tt-span2">' + cardHead('Sparkles', 'Brand book hub', 'Completed identity system \u2014 all modules final') +
+      '<div class="tt-hub">' + hub + '</div></section>' +
+    '<section class="tt-card">' + cardHead('FileText', 'Asset library', 'Download & approval status') +
+      '<div class="tt-assets">' + assets + '</div></section>' +
+    '<section class="tt-card tt-span2">' + cardHead('Palette', 'Color palette system', 'Click any swatch to copy its HEX') +
+      '<div class="tt-swatches">' + swatches + '</div></section>' +
+    '<section class="tt-card">' + cardHead('Type', 'Typography & grid', 'Headline, body and layout rules') + type + '</section></div>';
+}
+
+function research() {
+  var items = INSIGHTS.map(function (it) {
+    var on = state.openInsight === it.id;
+    var body = '';
+    if (on) {
+      var quote = it.quote ? '<div class="tt-quote">' + ic('Quote', 15, 1.6) +
+        '<span class="tt-quote-ar" dir="rtl">' + it.quote + '</span>' +
+        '<span class="tt-quote-en">' + it.quoteEn + '</span></div>' : '';
+      var points = '<ul class="tt-insight-points">' + it.points.map(function (p) {
+        return '<li>' + ic('Check', 13, 2) + ' ' + p + '</li>';
+      }).join('') + '</ul>';
+      var flags = '<div class="tt-insight-flags">' +
+        '<div class="tt-flag tt-flag--pain"><span>Pain point</span>' + it.pain + '</div>' +
+        '<div class="tt-flag tt-flag--opp"><span>Opportunity</span>' + it.opp + '</div></div>';
+      body = '<div class="tt-insight-body">' + quote + points + flags + '</div>';
+    }
+    return '<div class="tt-insight' + (on ? ' tt-insight--on' : '') + '">' +
+      '<button class="tt-insight-head" data-insight="' + it.id + '">' +
+        '<span class="tt-insight-icon">' + ic(it.icon, 16, 1.7) + '</span>' +
+        '<span class="tt-insight-title">' + it.title + '</span>' +
+        '<span class="tt-insight-tag">' + it.tag + '</span>' +
+        '<span class="tt-chev' + (on ? ' tt-chev--on' : '') + '">' + ic('ChevronDown', 16, 1.8) + '</span>' +
+      '</button>' + body + '</div>';
+  }).join('');
+  return '<div class="tt-grid tt-grid--research"><section class="tt-card tt-span3">' +
+    cardHead('MapPin', 'Local Saudi research & ground intelligence', '450+ field touchpoints across Riyadh & Jeddah \u2014 tap a stream to expand') +
+    '<div class="tt-insights">' + items + '</div></section></div>';
+}
+
+function creative() {
+  var list = CREATIVES.filter(function (c) {
+    if (state.filter === 'All') return true;
+    if (state.filter === 'Pending review') return c.status === 'Under review';
+    return c.status === state.filter;
+  });
+  var chips = FILTERS.map(function (f) {
+    return '<button class="tt-chip' + (state.filter === f ? ' tt-chip--on' : '') + '" data-filter="' + f + '">' + f + '</button>';
+  }).join('');
+  var cards = list.map(function (c) {
+    return '<div class="tt-creative"><div class="tt-creative-thumb">' + ic('Camera', 22, 1.3) +
+      '<span class="tt-creative-format">' + c.format + '</span></div>' +
+      '<div class="tt-creative-body"><div class="tt-creative-title">' + c.title + '</div>' +
+      '<div class="tt-creative-hook"><span class="tt-hook-ar" dir="rtl">' + c.ar + '</span>' +
+      '<span class="tt-hook-en">' + c.en + '</span></div>' +
+      '<div class="tt-creative-foot">' + pill(c.status, statusTone(c.status)) +
+      '<button class="tt-icon-btn" title="Preview">' + ic('Eye', 13, 1.8) + '</button></div></div></div>';
+  }).join('');
+  return '<div><div class="tt-filterbar">' +
+    '<div class="tt-filter-label">' + ic('Filter', 14, 1.8) + ' Filter creatives</div>' +
+    '<div class="tt-filter-chips">' + chips + '</div>' +
+    '<div class="tt-filter-count">' + list.length + ' shown</div></div>' +
+    '<div class="tt-creatives">' + cards + '</div></div>';
+}
+
+function video() {
+  var cards = VIDEOS.map(function (v, i) {
+    var fb = state.feedback[i];
+    return '<div class="tt-video"><div class="tt-video-thumb">' + ic('PlayCircle', 26, 1.3) +
+      '<span class="tt-video-dur">' + v.dur + '</span></div>' +
+      '<div class="tt-video-body"><div class="tt-video-title">' + v.title + '</div>' +
+      '<div class="tt-video-meta"><span>' + ic('Smartphone', 12, 1.8) + ' ' + v.platform + '</span>' +
+      '<span>' + ic('Radio', 12, 1.8) + ' ' + v.audio + '</span></div>' +
+      '<div class="tt-video-track">' +
+      '<span class="tt-track"><span class="tt-track-k">Raw</span> ' + pill(v.raw, statusTone(v.raw)) + '</span>' +
+      '<span class="tt-track"><span class="tt-track-k">Post</span> ' + pill(v.post, VSTATE[v.state]) + '</span></div>' +
+      '<button class="tt-fb-toggle' + (fb ? ' tt-fb-toggle--on' : '') + '" data-vid="' + i + '">' +
+      ic('ThumbsUp', 13, 1.9) + ' ' + (fb ? 'Feedback submitted' : 'Submit feedback') + '</button></div></div>';
+  }).join('');
+  return '<div class="tt-grid tt-grid--video"><section class="tt-card tt-span3">' +
+    cardHead('Video', 'Reels & video production pipeline', '12 raw reels shot \u00b7 6 drafts in client review') +
+    '<div class="tt-videos">' + cards + '</div></section></div>';
+}
+
+function roadmap() {
+  var weeks = ''; for (var w = 1; w <= 8; w++) weeks += '<span class="tt-gantt-week">W' + w + '</span>';
+  var rows = GANTT.map(function (g) {
+    return '<div class="tt-gantt-row"><span class="tt-gantt-task">' + g.task + '</span>' +
+      '<div class="tt-gantt-track"><span class="tt-gantt-bar tt-tone--' + g.tone +
+      '" style="grid-column:' + g.start + ' / span ' + g.span + '"></span></div></div>';
+  }).join('');
+  var legend = '<div class="tt-legend">' +
+    '<span><i class="tt-tone--emerald"></i> Done</span>' +
+    '<span><i class="tt-tone--amber"></i> Active / review</span>' +
+    '<span><i class="tt-tone--slate"></i> Queued</span></div>';
+  return '<div class="tt-grid tt-grid--roadmap"><section class="tt-card tt-span3">' +
+    cardHead('Calendar', 'Multi-channel rollout', '8-week launch schedule \u2014 Q3 into Q4') +
+    '<div class="tt-gantt"><div class="tt-gantt-head"><span class="tt-gantt-corner"></span>' + weeks + '</div>' +
+    rows + '</div>' + legend + '</section></div>';
+}
+
+function panel() {
+  switch (state.tab) {
+    case 'brand': return brand();
+    case 'research': return research();
+    case 'creative': return creative();
+    case 'video': return video();
+    case 'roadmap': return roadmap();
+    default: return overview();
+  }
+}
+
+function actionbar() {
+  var info = state.barMsg
+    ? '<span class="tt-bar-msg">' + ic('Check', 15, 2) + ' ' + state.barMsg + '</span>'
+    : '<span class="tt-bar-strong">18 creatives</span> awaiting your decision this batch.';
+  return '<div class="tt-actionbar"><div class="tt-actionbar-info">' + info + '</div>' +
+    '<div class="tt-actionbar-btns">' +
+    '<button class="tt-btn tt-btn--ghost" data-bar="Meeting request sent to the account team.">' +
+      ic('Send', 14, 1.9) + ' Request feedback meeting</button>' +
+    '<button class="tt-btn tt-btn--gold" data-bar="Batch of 18 approved \u2014 client notified.">' +
+      ic('ThumbsUp', 14, 1.9) + ' Approve current batch (18)</button></div></div>';
+}
+
+function render() {
+  document.getElementById('root').innerHTML =
+    '<div class="tt-glow" aria-hidden="true"></div>' +
+    header() + kpis() + tabs() +
+    '<main class="tt-main">' + panel() + '</main>' +
+    actionbar();
+}
+
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('[data-tab],[data-insight],[data-filter],[data-hex],[data-vid],[data-bar]');
+  if (!el) return;
+  if (el.hasAttribute('data-tab')) { state.tab = el.getAttribute('data-tab'); render(); }
+  else if (el.hasAttribute('data-insight')) {
+    var id = el.getAttribute('data-insight');
+    state.openInsight = state.openInsight === id ? null : id; render();
+  } else if (el.hasAttribute('data-filter')) { state.filter = el.getAttribute('data-filter'); render(); }
+  else if (el.hasAttribute('data-hex')) {
+    var hex = el.getAttribute('data-hex');
+    if (navigator.clipboard) navigator.clipboard.writeText(hex).catch(function () {});
+    state.copied = hex; render();
+    setTimeout(function () { if (state.copied === hex) { state.copied = null; render(); } }, 1400);
+  } else if (el.hasAttribute('data-vid')) {
+    var i = el.getAttribute('data-vid'); state.feedback[i] = !state.feedback[i]; render();
+  } else if (el.hasAttribute('data-bar')) {
+    state.barMsg = el.getAttribute('data-bar'); render();
+    setTimeout(function () { state.barMsg = null; render(); }, 2600);
+  }
+});
+
+render();
+
+</script>
+</body>
+</html>
